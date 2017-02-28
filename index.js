@@ -3,14 +3,16 @@
 const fs = require('fs');
 const execa = require('execa');
 const co = require('co');
+const path = require('path');
 
 module.exports = function () {
 	return new Promise(function (resolve, reject) {
 		co(function *() {
 			var bin;
 			try {
-				if (fs.statSync('bin/whereami')) {
-					bin = 'bin/whereami';
+				const embeddedBinary = path.resolve(__dirname, 'bin', 'whereami')
+				if (fs.statSync(embeddedBinary)) {
+					bin = embeddedBinary;
 				}
 			} catch (e) {
 				bin = 'whereami';
